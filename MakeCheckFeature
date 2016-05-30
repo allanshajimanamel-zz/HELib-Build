@@ -1,0 +1,37 @@
+
+echo "*** Checking for feature: $1"
+
+echo "" > "../include/NTL/HAVE_$1.h"
+
+if test -f CheckFeature
+then
+sh RemoveProg CheckFeature
+sh AndroidRemoveProg $5/CheckFeature
+fi
+
+
+echo $3 $2 $4 -o CheckFeature
+$3 $2 $4 -o CheckFeature
+
+
+adb push CheckFeature $5/
+
+if test -f CheckFeature
+	then
+		if adb shell $5/CheckFeature
+		then
+			echo "*** have feature: $1"
+			echo "#ifndef NTL_HAVE_$1" >  "../include/NTL/HAVE_$1.h"
+			echo "#define NTL_HAVE_$1" >> "../include/NTL/HAVE_$1.h"
+			echo "#endif"              >> "../include/NTL/HAVE_$1.h"
+			sh RemoveProg CheckFeature
+			sh AndroidRemoveProg $5/CheckFeature
+			exit 0
+		fi
+fi
+
+echo "*** DO NOT have feature: $1"
+sh RemoveProg CheckFeature
+sh AndroidRemoveProg $5/CheckFeature
+exit 0
+

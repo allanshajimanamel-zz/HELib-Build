@@ -1,0 +1,35 @@
+
+if test -f GetPID.c
+then
+   rm GetPID.c
+fi
+
+echo "who am I?"
+
+if test -f TestGetPID
+then
+sh RemoveProg TestGetPID
+sh AndroidRemoveProg $3/TestGetPID
+fi
+
+echo $1 TestGetPID.c GetPID1.c $2 -o TestGetPID
+$1 TestGetPID.c GetPID1.c $2 -o TestGetPID
+
+adb push TestGetPID $3/
+
+if test -f TestGetPID
+	then
+		if adb shell $3/TestGetPID
+		then
+			cp GetPID1.c GetPID.c
+			echo "using GetPID1.c"
+			exit 0
+		fi
+fi
+
+
+cp GetPID2.c GetPID.c
+echo "using GetPID2.c"
+echo "warning: this GetPID function always returns 0"
+exit 0
+
