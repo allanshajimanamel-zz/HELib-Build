@@ -1,8 +1,0 @@
-
-for i in $*
-do
-   adb shell rm $i
-done
- 
-exit 0
-
