@@ -97,7 +97,8 @@ How to build NTL
 		15.) NTL should now be built and can be found in the build folder inside src.
 		
 NTL test:
-		1.) Download the test file from the link below
+		
+                1.) Download the test file from the link below
 				https://bitbucket.org/allanshajimanamel/helib-build-test/downloads/testgmp.cpp
 		2.) Compile it using the below command
 				
